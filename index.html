@@ -5,15 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DOM manipulation [Ole]</title>
     <link rel="stylesheet" href="style.css" />
-    <script src="./app.js"></script>
+    <script defer src="./app.js"></script>
   </head>
   <body>
     <header>
-      <h1></h1>
+      <h1>Bubble Popping</h1>
     </header>
     <main>
-      <section id="info"></section>
-      <section></section>
+      <section id="info">
+        <p id="score-text">Score - <span id="score-amount">110</span></p>
+      </section>
+      <section id="playarea">
+        <div class="bubble"></div>
+        <button id="play-btn">Play!</button>
+      </section>
     </main>
   </body>
 </html>
