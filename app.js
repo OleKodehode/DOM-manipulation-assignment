@@ -2,7 +2,7 @@ const scoreTxt = document.querySelector("#score-amount");
 const playBtn = document.querySelector("#play-btn");
 const playArea = document.querySelector("#playarea");
 const playAreaWidth = playArea.offsetWidth;
-const root = document.querySelector(":root"); // to get css variables
+const timer = document.querySelector("#timer");
 const bubbleColors = [
   "hsla(280, 100%, 75%, 0.8)",
   "hsla(220, 100%, 75%, 0.8)",
@@ -10,18 +10,15 @@ const bubbleColors = [
   "hsla(100, 100%, 75%, 0.8)",
   "hsla(30, 100%, 75%, 0.8)",
 ];
-const gameDuration = 30000; // 30 seconds in milliseconds
+const gameDuration = 30000; // 30 seconds in milliseconds, needed for Date.now comparison later.
 const bubbleInterval = 300; // time in ms
-let startTime;
+let startTime; // start time is set with Date.now when starting the mini-game
+let timeLeft; // variable to store the time left, set during the startCountdown function
 let playerScore = 0;
-let bubblePool;
+let bubblePool; // pool is created at the start of the game.
 
 // adding the eventlistener for the button
 playBtn.addEventListener("click", startGame);
-
-console.log(playAreaWidth);
-
-// root.style.setProperty("--bubble-color", bubbleColors[0]);  <- setting different color
 
 function startGame() {
   bubblePool = generateBubbleData(20); // call on function to generate an array of objects of bubble data.
@@ -29,6 +26,8 @@ function startGame() {
   scoreTxt.textContent = playerScore; // reset score
   playBtn.classList.toggle("hidden"); // hide button through class and styling
   startTime = Date.now();
+
+  startCountdown();
 
   const interval = setInterval(() => {
     if (Date.now() - startTime > gameDuration) {
@@ -93,4 +92,32 @@ function generateBubbleData(count) {
     color: bubbleColors[Math.floor(Math.random() * bubbleColors.length)],
     scale: (0.8 + Math.random() * 0.4).toFixed(2), // set base scale to 0.8 and add up to 0.4 to the scale -> 0.8 - 1.2
   }));
+}
+
+function startCountdown() {
+  timeLeft = gameDuration / 1000; // Make sure the timer is reset.
+  updateTimerDisplay();
+
+  // Every second, subtract 1 from timeLeft and update the display
+  const timerInterval = setInterval(() => {
+    timeLeft--;
+    updateTimerDisplay();
+
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      updateTimerDisplay(); // one last update.
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  timer.textContent = timeLeft;
+
+  if (timeLeft <= 10) {
+    timer.style.color = "red";
+    timer.style.transform = "scale(1.2)";
+  } else {
+    timer.style.color = "";
+    timer.style.transform = "scale(1)";
+  }
 }

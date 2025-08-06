@@ -45,6 +45,10 @@ span {
   display: inline;
 }
 
+#timer {
+  transition: all 0.2s ease;
+}
+
 #playarea {
   height: 75svh;
   position: relative;
