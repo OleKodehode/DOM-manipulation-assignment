@@ -26,11 +26,16 @@ h1 {
   font-family: "Bubblegum Sans", sans-serif;
   color: hsl(220, 100%, 65%);
   font-size: 3em;
+  text-shadow: 2px 2px 4px hsl(0, 0%, 10%);
 }
 
 #info {
   height: 5svh;
-  text-align: center;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 2em;
   background-color: hsl(0, 0%, 90%);
   font-family: "Bubblegum Sans", sans-serif;
   font-size: 1.5em;
@@ -45,11 +50,11 @@ span {
 }
 
 #play-btn {
-  padding: 1em;
+  padding: 0.75em;
   font-size: 1.5em;
   position: absolute;
-  bottom: 10px;
-  left: 10px;
+  top: 2svh;
+  right: 30svw;
   border-radius: 50px;
   background-color: hsl(40, 100%, 50%);
   border: none;
@@ -74,11 +79,12 @@ span {
   background: radial-gradient(
     circle at 30% 30%,
     var(--bubble-color),
-    rgba(255, 255, 255, 0.2)
+    hsla(255, 100%, 100%, 0.2)
   );
   box-shadow: inset 0 0 10px hsla(0, 0%, 100%, 0.5),
     0 0 5px hsla(0, 0%, 0%, 0.2);
   filter: brightness(1.1) contrast(0.9);
   /* noe hjelp fra LLM for background, box-shadow, filter */
   outline: 1px dashed hsl(0, 0%, 90%);
+  cursor: crosshair;
 }
