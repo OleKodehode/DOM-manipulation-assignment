@@ -54,6 +54,7 @@ function spawnBubble(bubbleData) {
   const bubbleElement = document.createElement("div");
   bubbleElement.classList.add("bubble");
   bubbleElement.style.backgroundColor = bubbleData.color;
+  bubbleElement.style.setProperty("--scale", bubbleData.scale); // for use in animation to keep the scale the same when popping
   bubbleElement.style.transform = `scale(${bubbleData.scale})`;
 
   const drift = Math.floor(Math.random() * 200) - 100; // -100 to +100. Horizontal drift towards the top
@@ -76,8 +77,7 @@ function spawnBubble(bubbleData) {
   bubbleElement.addEventListener("click", () => {
     playerScore++;
     scoreTxt.textContent = playerScore; // update the score text in the UI
-    bubbleElement.classList.add("destroyed"); // class to trigger animation
-    setTimeout(() => bubbleElement.remove(), 300); // timer to destroy the bubble
+    bubbleElement.remove();
   });
 
   // Automatically remove the bubble if the floating up animation completes
