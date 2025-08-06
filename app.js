@@ -73,7 +73,7 @@ function spawnBubble(bubbleData) {
   bubbleElement.style.bottom = 0;
 
   // Click to destroy logic using EventListener
-  bubbleElement.addEventListener("click", () => {
+  bubbleElement.addEventListener("mousedown", () => {
     playerScore++;
     scoreTxt.textContent = playerScore; // update the score text in the UI
     bubbleElement.remove();
