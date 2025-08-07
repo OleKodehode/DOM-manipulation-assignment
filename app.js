@@ -12,6 +12,7 @@ const bubbleColors = [
   "hsla(100, 100%, 75%, 0.8)",
   "hsla(30, 100%, 75%, 0.8)",
 ];
+const popSource = "./assets/pop-sound-effect.mp3";
 const gameDuration = 30000; // 30 seconds in milliseconds, needed for Date.now comparison later.
 const bubbleInterval = 600; // time in ms
 let startTime; // start time is set with Date.now when starting the mini-game
@@ -81,6 +82,7 @@ function spawnBubble(bubbleData) {
     // mousedown to get an immediate response on click rather than click which is on mouseup.
     playerScore++;
     scoreTxt.textContent = playerScore; // update the score text in the UI
+    playPopSound();
     bubbleElement.remove();
   });
 
@@ -125,6 +127,13 @@ function updateTimerDisplay() {
     timer.style.color = "";
     timer.style.transform = "scale(1)";
   }
+}
+
+function playPopSound() {
+  // probably not the most performant way of playing a sound every time a bubble is clicked
+  const source = "./assets/pop-sound-effect.mp3";
+  const audio = new Audio(source);
+  audio.play();
 }
 
 // some help from LLM to iron out some bugs and finding the correct functions and methods to use.
