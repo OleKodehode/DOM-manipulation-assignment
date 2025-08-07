@@ -15,6 +15,8 @@ const bubbleColors = [
 const popSource = "./assets/pop-sound-effect.mp3";
 const gameDuration = 30000; // 30 seconds in milliseconds, needed for Date.now comparison later.
 const bubbleInterval = 600; // time in ms
+const tickAudio = new Audio("./assets/tick-sound-effect.mp3");
+const finishAudio = new Audio("./assets/horn-sound-effect.mp3");
 let startTime; // start time is set with Date.now when starting the mini-game
 let timeLeft; // variable to store the time left, set during the startCountdown function
 let playerScore = 0;
@@ -110,7 +112,12 @@ function startCountdown() {
     timeLeft--;
     updateTimerDisplay();
 
+    if (timeLeft <= 10 && timeLeft > 0) {
+      tickAudio.play();
+    }
+
     if (timeLeft <= 0) {
+      finishAudio.play();
       clearInterval(timerInterval);
       updateTimerDisplay(); // one last update.
     }
