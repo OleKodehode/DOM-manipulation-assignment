@@ -6,14 +6,11 @@
   box-sizing: border-box;
 }
 
-:root {
-  --bubble-color: hsla(280, 100%, 75%, 0.8);
-}
-
 body {
   min-height: 100svh;
   background-image: url("./assets/background-by-mcmurryjulie.png");
-  background-color: hsl(0, 0%, 50%);
+  background-color: hsl(0, 0%, 60%);
+  font-family: "Bubblegum Sans", sans-serif;
 }
 
 header {
@@ -23,7 +20,6 @@ header {
 }
 
 h1 {
-  font-family: "Bubblegum Sans", sans-serif;
   color: hsl(220, 100%, 65%);
   font-size: 3em;
   text-shadow: 2px 2px 4px hsl(0, 0%, 10%);
@@ -37,20 +33,11 @@ h1 {
   align-items: center;
   gap: 2em;
   background-color: hsl(0, 0%, 90%);
-  font-family: "Bubblegum Sans", sans-serif;
   font-size: 1.5em;
 }
 
-span {
-  display: inline;
-}
-
-#timer {
-  transition: all 0.2s ease;
-}
-
 #playarea {
-  height: 75svh;
+  height: 80svh;
   position: relative;
 }
 
@@ -82,6 +69,7 @@ span {
   width: 100px;
   height: 100px;
   border-radius: 50%;
+  /* some help from an LLM for background, box-shadow, filter */
   background: radial-gradient(
     circle at 30% 30%,
     var(--bubble-color),
@@ -90,11 +78,9 @@ span {
   box-shadow: inset 0 0 10px hsla(0, 0%, 100%, 0.5),
     0 0 5px hsla(0, 0%, 0%, 0.2);
   filter: brightness(1.1) contrast(0.9);
-  /* some help from an LLM for background, box-shadow, filter */
   outline: 1px dashed hsl(0, 0%, 90%);
   cursor: crosshair;
   animation: floatUp 5s linear;
-  transition: transform 0.3s ease;
 }
 
 @keyframes floatUp {
@@ -103,7 +89,7 @@ span {
     transform: translateX(0);
   }
   to {
-    bottom: 100%;
+    bottom: 95%;
     transform: translateX(var(--drift));
   }
 }

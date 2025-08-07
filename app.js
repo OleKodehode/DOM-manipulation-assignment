@@ -1,8 +1,10 @@
+// fetching all the DOM elements needed for the script
 const scoreTxt = document.querySelector("#score-amount");
 const playBtn = document.querySelector("#play-btn");
 const playArea = document.querySelector("#playarea");
 const playAreaWidth = playArea.offsetWidth;
 const timer = document.querySelector("#timer");
+
 const bubbleColors = [
   "hsla(280, 100%, 75%, 0.8)",
   "hsla(220, 100%, 75%, 0.8)",
@@ -11,7 +13,7 @@ const bubbleColors = [
   "hsla(30, 100%, 75%, 0.8)",
 ];
 const gameDuration = 30000; // 30 seconds in milliseconds, needed for Date.now comparison later.
-const bubbleInterval = 300; // time in ms
+const bubbleInterval = 600; // time in ms
 let startTime; // start time is set with Date.now when starting the mini-game
 let timeLeft; // variable to store the time left, set during the startCountdown function
 let playerScore = 0;
@@ -29,10 +31,13 @@ function startGame() {
 
   startCountdown();
 
+  // gameloop - Using an interval to continuously call on createBubbles to create new bubble elements at a set interval until the time has ran out
   const interval = setInterval(() => {
     if (Date.now() - startTime > gameDuration) {
       clearInterval(interval);
       playBtn.classList.toggle("hidden"); // toggle play-button to reappear after the interval is complete.
+      // select all the bubbles in the DOM and run forEach to remove each element
+      document.querySelectorAll(".bubble").forEach((e) => e.remove());
       return;
     }
     createBubbles();
@@ -53,7 +58,6 @@ function spawnBubble(bubbleData) {
   const bubbleElement = document.createElement("div");
   bubbleElement.classList.add("bubble");
   bubbleElement.style.backgroundColor = bubbleData.color;
-  bubbleElement.style.setProperty("--scale", bubbleData.scale); // for use in animation to keep the scale the same when popping
   bubbleElement.style.transform = `scale(${bubbleData.scale})`;
 
   const drift = Math.floor(Math.random() * 200) - 100; // -100 to +100. Horizontal drift towards the top
@@ -74,6 +78,7 @@ function spawnBubble(bubbleData) {
 
   // Click to destroy logic using EventListener
   bubbleElement.addEventListener("mousedown", () => {
+    // mousedown to get an immediate response on click rather than click which is on mouseup.
     playerScore++;
     scoreTxt.textContent = playerScore; // update the score text in the UI
     bubbleElement.remove();
@@ -85,17 +90,17 @@ function spawnBubble(bubbleData) {
   playArea.append(bubbleElement);
 }
 
-function generateBubbleData(count) {
+function generateBubbleData(amount) {
   // Make an array of objects to store the bubble data based on the number coming in to the function
   // Objects keys - Color & Scale
-  return Array.from({ length: count }, () => ({
+  return Array.from({ length: amount }, () => ({
     color: bubbleColors[Math.floor(Math.random() * bubbleColors.length)],
     scale: (0.8 + Math.random() * 0.4).toFixed(2), // set base scale to 0.8 and add up to 0.4 to the scale -> 0.8 - 1.2
   }));
 }
 
 function startCountdown() {
-  timeLeft = gameDuration / 1000; // Make sure the timer is reset.
+  timeLeft = gameDuration / 1000; // Make sure the timer is reset. gameDuration is in ms so convert to seconds first.
   updateTimerDisplay();
 
   // Every second, subtract 1 from timeLeft and update the display
@@ -115,9 +120,11 @@ function updateTimerDisplay() {
 
   if (timeLeft <= 10) {
     timer.style.color = "red";
-    timer.style.transform = "scale(1.2)";
+    timer.style.transform = "scale(1.25)";
   } else {
     timer.style.color = "";
     timer.style.transform = "scale(1)";
   }
 }
+
+// some help from LLM to iron out some bugs and finding the correct functions and methods to use.
